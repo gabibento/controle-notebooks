@@ -1,6 +1,7 @@
 import './App.css';
 import Home from './components/Home';
-import Form from './components/Form';
+import AcquireForm from './components/Forms/AcquireForm';
+import ReturnForm from './components/Forms/ReturnForm';
 import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 
 function App() {
@@ -12,7 +13,7 @@ function App() {
       <Router>
         <Routes>
           <Route path='/' element={<Home/>}></Route>
-          <Route path='/form/:id' element={<Form/>}></Route>
+          <Route path='/form/:id' element={<ReturnForm/>}></Route>
         </Routes>
       </Router>
  

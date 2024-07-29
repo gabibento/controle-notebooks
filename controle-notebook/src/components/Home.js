@@ -27,7 +27,7 @@ const Home = () => {
       {notebooks.map((notebook, key) => (
         <ul key={key}>
           <li className={notebook.available ? styles.available : styles.unavailable}>
-            <Link to={`/form/${notebook.id}`}>{notebook.id}</Link>
+            <Link to={notebook.available ? `/form/${notebook.id}` : `/form/${notebook.id}`}>{notebook.id}</Link>
           </li>
         </ul>
       ))}
