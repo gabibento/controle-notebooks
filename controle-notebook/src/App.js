@@ -13,7 +13,8 @@ function App() {
       <Router>
         <Routes>
           <Route path='/' element={<Home/>}></Route>
-          <Route path='/form/:id' element={<ReturnForm/>}></Route>
+          <Route path='/formacquire/:id' element={<AcquireForm/>}></Route>
+          <Route path='/formreturn/:id' element={<ReturnForm/>}></Route>
         </Routes>
       </Router>
  

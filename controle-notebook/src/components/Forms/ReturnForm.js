@@ -1,40 +1,69 @@
-import React from 'react'
+import { useState, useEffect } from 'react';
+import { useParams, useNavigate} from 'react-router-dom';
 import useHistoryForm from './useHistoryForm'
 import { db } from '../../firebaseConfig';
-import { collection, doc, getDocs, limit, orderBy, query } from "firebase/firestore";
+import { collection, doc, updateDoc, getDocs, limit, orderBy, query } from "firebase/firestore";
 
 const ReturnForm = () => {
 
-    const { history, handleOnChange, handleOnSubmit } = useHistoryForm();
+    const { history, handleOnChange } = useHistoryForm();
+    const [lastHistory, setLastHistory] = useState(null);
+    const { id } = useParams();
+    const navigate = useNavigate();
 
     const getLastHistory = async (notebookId) => {
       try {
         const historyRef = collection(db, 'notebooks', notebookId, 'history');
-        // Ordenar por timestamp e limitar a um resultado
+       
         const q = query(historyRef, orderBy('createdAt', 'desc'), limit(1));
         const querySnapshot = await getDocs(q);
     
-        let lastHistory = null;
         querySnapshot.forEach((doc) => {
-          lastHistory = { id: doc.id, ...doc.data() };
+          setLastHistory({id: doc.id, ...doc.data()});
         });
+
+        console.log(lastHistory)
     
-        return lastHistory;
+        
       } catch (e) {
         console.error('Erro ao obter o último histórico: ', e);
-        return null;
+       
+      }
+    }
+    useEffect(() => {
+      if (id) {
+        getLastHistory(id);
+      }
+    }, [id]);
+
+    const handleOnSubmit = async (e) => {
+      e.preventDefault()
+    
+      console.log(lastHistory)
+
+      if (lastHistory) {
+        const notebookRef = doc(db, 'notebooks', id)
+
+        const docRef = doc(notebookRef, 'history', lastHistory.id);
+        await updateDoc(docRef, { returnDate: history.returnDate });
+        await updateDoc(notebookRef, { available: !history.available });
+        console.log('Histórico atualizado com sucesso');
+        navigate('/');
+        
+      } else {
+        console.log('Erro: Histórico não encontrado');
       }
     }
 
   return (
     <form onSubmit={handleOnSubmit}>
      
-    <label htmlFor="date">Data</label>
+    <label htmlFor="returnDate">Data</label>
     <input
-      id="date"
-      name="date"
+      id="returnDate"
+      name="returnDate"
       type="date"
-      value={history.date}
+      value={history.returnDate || ''}
       onChange={handleOnChange}
     />
       <button type='submit'>Enviar</button>

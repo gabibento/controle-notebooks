@@ -1,7 +1,6 @@
-import { useState, useContext } from 'react';
-import { useParams } from 'react-router-dom';
+import { useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import { addHistory } from './addHistory';
-import { HistoryContext } from '../contexts/HistoryContext';
 
 const useHistoryForm = () => {
   const { id } = useParams();
@@ -9,7 +8,7 @@ const useHistoryForm = () => {
     collaborator: "",
     date: ""
   });
-  const { setDocId } = useContext(HistoryContext);
+  const navigate = useNavigate();
 
   const handleOnChange = (e) => {
     const { name, value } = e.target;
@@ -21,8 +20,10 @@ const useHistoryForm = () => {
     console.log(history);
 
     const docId = await addHistory(id, history);
-    setDocId(docId);
+
     console.log("added " + docId);
+
+    navigate('/');
   };
 
   return {

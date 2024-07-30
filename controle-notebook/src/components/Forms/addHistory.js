@@ -1,5 +1,5 @@
 import { db } from '../../firebaseConfig';
-import { doc, collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { doc, collection, addDoc, serverTimestamp, updateDoc } from 'firebase/firestore';
 
 export const addHistory = async (id, history) => {
     try{
@@ -11,6 +11,8 @@ export const addHistory = async (id, history) => {
             createdAt: serverTimestamp()
           });
           const docId = docRef.id;
+
+          await updateDoc(notebookRef, { available: false })
   
           return docId;
         }else{
