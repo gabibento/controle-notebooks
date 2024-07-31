@@ -8,7 +8,7 @@ export const addHistory = async (id, history) => {
         if(notebookRef){
           const docRef = await addDoc(collection(notebookRef, 'history'), {
             ...history,
-            createdAt: serverTimestamp()
+            date: serverTimestamp()
           });
           const docId = docRef.id;
 

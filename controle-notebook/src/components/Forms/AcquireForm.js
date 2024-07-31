@@ -1,32 +1,40 @@
 import React from 'react'
-import useHistoryForm from './useHistoryForm'
+import Form from './Form';
+
+import { useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import { addHistory } from './addHistory';
 
 const AcquireForm = () => {
 
-  const { history, handleOnChange, handleOnSubmit} = useHistoryForm();
+  const { id } = useParams();
+  const [history, setHistory] = useState({
+    collaborator: "",
+    date: ""
+  });
+  const navigate = useNavigate();
+
+  const handleOnChange = (e) => {
+    const { name, value } = e.target;
+    setHistory(prevState => ({ ...prevState, [name]: value }));
+  };
+
+  const handleOnSubmit = async (e) => {
+    e.preventDefault();
+    console.log(history);
+
+    const docId = await addHistory(id, history);
+
+    console.log("added " + docId);
+
+    navigate('/');
+  };
 
   return (
-    <form onSubmit={handleOnSubmit}>
-      
-    <label htmlFor="collaborator">Colaborador</label>
-    <input
-      id="collaborator"
-      name="collaborator"
-      type="text"
-      value={history.collaborator}
-      onChange={handleOnChange}
-    />
-
-    <label htmlFor="date">Data</label>
-    <input
-      id="date"
-      name="date"
-      type="date"
-      value={history.date}
-      onChange={handleOnChange}
-    />
-      <button type='submit'>Enviar</button>
-  </form>
+    <div>
+      <h1>Retirar</h1>
+      <Form handleOnChange={handleOnChange} handleOnSubmit={handleOnSubmit} history={history}></Form>
+    </div>
   )
 }
 

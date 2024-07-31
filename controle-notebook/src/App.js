@@ -2,6 +2,7 @@ import './App.css';
 import Home from './components/Home';
 import AcquireForm from './components/Forms/AcquireForm';
 import ReturnForm from './components/Forms/ReturnForm';
+import UserForm from './components/Forms/UserForm';
 import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
           <Route path='/' element={<Home/>}></Route>
           <Route path='/formacquire/:id' element={<AcquireForm/>}></Route>
           <Route path='/formreturn/:id' element={<ReturnForm/>}></Route>
+          <Route path='/userform' element={<UserForm/>}></Route>
         </Routes>
       </Router>
  
