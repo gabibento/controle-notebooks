@@ -24,7 +24,7 @@ const Form = ({history, handleOnChange, handleOnSubmit}) => {
     <form onSubmit={handleOnSubmit}>
       
     <label htmlFor="collaborator">Nome</label>
-    <select name="collaborator" id="collaborator" onChange={handleOnChange}>
+    <select name="collaborator" id="collaborator" onChange={handleOnChange} required>
       <option value="">Selecione seu nome</option>
         {collaborators.map((collaborator, index) => (
           <option value={collaborator} key={index}>{collaborator}</option>
@@ -36,7 +36,7 @@ const Form = ({history, handleOnChange, handleOnSubmit}) => {
     id='password'
     name='password'
     type="password"
-    
+    required
     />
     
     <button type='submit'>Enviar</button>

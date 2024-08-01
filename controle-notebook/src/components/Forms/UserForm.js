@@ -1,6 +1,7 @@
 import {useState} from 'react'
 import { db } from '../../firebaseConfig'
 import { collection, addDoc } from 'firebase/firestore'
+import { useNavigate } from 'react-router-dom'
 
 const UserForm = () => {
 
@@ -9,6 +10,7 @@ const UserForm = () => {
         email: '',
         password: ''
     })
+    const navigate  = useNavigate()
 
     const addUser = async () => {
         try{
@@ -24,6 +26,7 @@ const UserForm = () => {
         e.preventDefault();
         const docId = await addUser();
         console.log("Usuário criado com sucesso com o id: " + docId)
+        navigate('/')
     }
 
     const handleOnChange = (e) => {
@@ -40,7 +43,8 @@ const UserForm = () => {
             name='name'
             type="text"
             value={user.name}
-            onChange={handleOnChange} />
+            onChange={handleOnChange}
+            required />
 
             <label htmlFor="email">E-mail</label>
             <input 
@@ -48,7 +52,8 @@ const UserForm = () => {
             name='email'
             type="email" 
             value={user.email}
-            onChange={handleOnChange}/>
+            onChange={handleOnChange}
+            required/>
 
             <label htmlFor="password">Password</label>
             <input 
@@ -56,7 +61,8 @@ const UserForm = () => {
             name='password'
             type="password"
             value={user.password} 
-            onChange={handleOnChange}/>
+            onChange={handleOnChange}
+            required/>
 
             <button type='submit'>Enviar</button>
         </form>
