@@ -53,6 +53,7 @@ const ReturnForm = () => {
         const docRef = doc(notebookRef, 'history', lastHistory.id);
         await updateDoc(docRef, { returnDate:  serverTimestamp()});
         await updateDoc(notebookRef, { available: !history.available });
+        await updateDoc(docRef, { returnCollaborator: history.collaborator})
         console.log('Histórico atualizado com sucesso');
         navigate('/');
         

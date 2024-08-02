@@ -27,7 +27,13 @@ const Home = () => {
       {notebooks.map((notebook, key) => (
         <ul key={key}>
           <li className={notebook.available ? styles.available : styles.unavailable}>
-            <Link to={notebook.available ? `/formacquire/${notebook.id}` : `/formreturn/${notebook.id}`}>{notebook.id}</Link>
+            <button>
+              <Link to={notebook.available ? `/formacquire/${notebook.id}` : `/formreturn/${notebook.id}`}>{notebook.id}</Link>
+            </button>
+            <button>
+              <Link to={`/history/${notebook.id}`}>Ver histórico</Link>
+            </button>
+            
           </li>
         </ul>
       ))}
