@@ -13,7 +13,7 @@ const Form = ({history, handleOnChange, handleOnSubmit}) => {
       const collaboratorsList = [];
       querySnapshot.forEach((doc) => {
         const docData = doc.data();
-        collaboratorsList.push(docData.name);
+        collaboratorsList.push(docData);
       });
       setCollaborators(collaboratorsList);
     };
@@ -29,12 +29,10 @@ const Form = ({history, handleOnChange, handleOnSubmit}) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    console.log(password)
     if (validatePassword(password, history.collaborator)) {
       handleOnSubmit(e);
     } else {
       console.log('Invalid password');
-      
     }
   };
 
@@ -49,7 +47,7 @@ const Form = ({history, handleOnChange, handleOnSubmit}) => {
     <select name="collaborator" id="collaborator" onChange={handleOnChange} required>
       <option value="">Selecione seu nome</option>
         {collaborators.map((collaborator, index) => (
-          <option value={collaborator} key={index}>{collaborator}</option>
+          <option value={collaborator.name} key={index}>{collaborator.name}</option>
         ))}
     </select>
 
